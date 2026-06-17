@@ -47,7 +47,7 @@ add_action( 'wp_enqueue_scripts', function () {
 		array(),
 		null
 	);
-	wp_enqueue_style( 'pq-theme', get_stylesheet_uri(), array( 'pq-fonts' ), '4.5.0' );
+	wp_enqueue_style( 'pq-theme', get_stylesheet_uri(), array( 'pq-fonts' ), '4.5.1' );
 }, 20 );
 
 /* ---------------------------------------------------------------------
