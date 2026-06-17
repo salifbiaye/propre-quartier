@@ -1,0 +1,26 @@
+# Secrets locaux
+.env
+*.local
+
+# Volumes / artefacts Docker
+*.log
+*.wpress
+wp-content/ai1wm-backups/
+wp-content/uploads/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editeurs
+.vscode/
+.idea/
+
+# Assistants IA / notes locales
+CLAUDE.md
+claude.md
+.claude/
+AGENTS.md
+.agents/
+.codex/
+.cursor/

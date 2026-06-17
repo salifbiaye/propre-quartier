@@ -1,0 +1,105 @@
+services:
+  # ----------------------------------------------------------------------
+  # Base de donnees MariaDB (drop-in remplacant de MySQL, plus leger)
+  # ----------------------------------------------------------------------
+  db:
+    image: mariadb:11.4
+    container_name: pq_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - pq_net
+
+  # ----------------------------------------------------------------------
+  # WordPress (Apache + PHP 8.3)
+  # ----------------------------------------------------------------------
+  wordpress:
+    image: wordpress:6.7-php8.3-apache
+    container_name: pq_wordpress
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${WP_PORT}:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      # Debug active en dev uniquement
+      WORDPRESS_DEBUG: ${WP_DEBUG}
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', '${WP_URL}');
+        define('WP_SITEURL', '${WP_URL}');
+        define('FS_METHOD', 'direct');
+    volumes:
+      # Coeur WordPress gere par un volume (non versionne)
+      - wp_data:/var/www/html
+      # Notre code metier est versionne et monte par-dessus
+      - ./wp-content/themes/propre-quartier:/var/www/html/wp-content/themes/propre-quartier
+      - ./wp-content/plugins/propre-quartier-core:/var/www/html/wp-content/plugins/propre-quartier-core
+    networks:
+      - pq_net
+
+  # ----------------------------------------------------------------------
+  # phpMyAdmin (administration de la base, pratique pour la demo)
+  # ----------------------------------------------------------------------
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    container_name: pq_phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "${PMA_PORT}:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 64M
+    networks:
+      - pq_net
+
+  # ----------------------------------------------------------------------
+  # WP-CLI : installation automatique du site (profil "setup")
+  # Lance avec :  docker compose run --rm wpcli
+  # ----------------------------------------------------------------------
+  wpcli:
+    image: wordpress:cli-php8.3
+    container_name: pq_wpcli
+    profiles: ["setup"]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - wp_data:/var/www/html
+      - ./wp-content/themes/propre-quartier:/var/www/html/wp-content/themes/propre-quartier
+      - ./wp-content/plugins/propre-quartier-core:/var/www/html/wp-content/plugins/propre-quartier-core
+      - ./bin:/bin/pq
+    entrypoint: ["sh", "/bin/pq/install.sh"]
+    networks:
+      - pq_net
+
+volumes:
+  db_data:
+  wp_data:
+
+networks:
+  pq_net:
+    driver: bridge
