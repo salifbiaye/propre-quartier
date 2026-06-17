@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Rapport — Propre Quartier</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap');
+
+:root{
+  --forest:#123A2A; --forest2:#0C2C1F; --accent:#1C6B4B; --accent-d:#14533A;
+  --gold:#EAB308; --ink:#19211D; --muted:#5C635D; --line:#E2DDD2; --wash:#ECF3EE;
+  --paper:#FAF8F3;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+  --sans:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
+}
+
+/* ---------- Pages ---------- */
+@page{
+  size:A4; margin:20mm 19mm 18mm;
+  @bottom-left{ content:"Propre Quartier — Projet IDA / CMS"; font-family:var(--sans); font-size:8pt; color:#9aa39c; }
+  @bottom-right{ content:"p. " counter(page); font-family:var(--sans); font-size:8pt; color:#9aa39c; }
+}
+@page:first{ margin:0; @bottom-left{content:none} @bottom-right{content:none} }
+
+*{ box-sizing:border-box; }
+html{ font-family:var(--sans); color:var(--ink); font-size:10.5pt; line-height:1.55; }
+body{ margin:0; }
+
+h1,h2,h3,h4{ font-family:var(--serif); font-weight:600; color:var(--ink); line-height:1.15; }
+p{ margin:0 0 .65em; }
+a{ color:var(--accent-d); text-decoration:none; }
+strong{ font-weight:600; }
+
+/* ---------- Couverture ---------- */
+.cover{
+  min-height:297mm; box-sizing:border-box; color:#fff; position:relative;
+  padding:34mm 26mm 24mm; page-break-after:always; overflow:hidden;
+  background:
+    radial-gradient(rgba(255,255,255,.5) 1px, transparent 1px) 0 0 / 7mm 7mm,
+    radial-gradient(120% 90% at 88% 0%, rgba(46,148,104,.55), transparent 60%),
+    linear-gradient(160deg, var(--forest) 0%, var(--forest2) 100%);
+}
+.cover::after{ /* liseré doré en bas */
+  content:""; position:absolute; left:0; right:0; bottom:0; height:8mm; background:var(--gold);
+}
+.cover .pill{
+  display:inline-block; font-family:var(--sans); font-size:9pt; font-weight:700;
+  letter-spacing:.18em; text-transform:uppercase; color:#fff;
+  background:rgba(255,255,255,.16); padding:5pt 14pt; border-radius:999px;
+}
+.cover .pill .dot{ color:var(--gold); }
+.cover h1{
+  font-family:var(--serif); font-weight:600; color:#fff;
+  font-size:62pt; line-height:.98; letter-spacing:-1.5pt; margin:14mm 0 6mm;
+}
+.cover h1 .it{ font-style:italic; font-weight:400; color:var(--gold); display:block; font-size:40pt; margin-top:3mm; }
+.cover .lead{ font-size:14pt; color:rgba(255,255,255,.86); max-width:135mm; margin:0 0 18mm; }
+.cover .rule{ width:42mm; height:2px; background:var(--gold); margin-bottom:9mm; }
+.cover .members{ display:flex; gap:14mm; flex-wrap:wrap; margin-bottom:16mm; }
+.cover .members .m .role{ font-family:var(--sans); font-size:8pt; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.6); margin-bottom:2pt; }
+.cover .members .m .name{ font-family:var(--serif); font-size:15pt; color:#fff; }
+.cover .meta{ position:absolute; left:26mm; right:26mm; bottom:18mm; display:flex; justify-content:space-between; font-family:var(--sans); font-size:9.5pt; color:rgba(255,255,255,.8); }
+.cover .meta strong{ color:#fff; }
+
+/* ---------- Sommaire ---------- */
+.toc{ page-break-after:always; }
+.toc h2{ font-size:22pt; margin:0 0 8mm; }
+.toc ol{ list-style:none; counter-reset:toc; padding:0; margin:0; }
+.toc li{ counter-increment:toc; display:flex; align-items:baseline; gap:8pt; padding:7pt 0; border-bottom:1px dotted var(--line); font-size:11pt; }
+.toc li::before{ content:counter(toc,decimal-leading-zero); font-family:var(--serif); color:var(--accent); font-weight:600; width:22pt; }
+.toc li .t{ flex:1; }
+
+/* ---------- Sections ---------- */
+.section{ margin-bottom:9mm; }
+h2.h{ font-size:20pt; margin:0 0 3mm; padding-top:2mm; }
+h2.h .num{ color:var(--accent); font-style:italic; margin-right:6pt; }
+h3{ font-size:13pt; margin:5mm 0 2mm; }
+.kick{ font-family:var(--sans); font-size:8.5pt; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); display:inline-block; background:var(--wash); padding:3pt 9pt; border-radius:999px; margin-bottom:3mm; }
+.lead-in{ font-size:12pt; color:#2c322d; }
+
+ul.clean{ margin:.3em 0 1em; padding-left:0; list-style:none; }
+ul.clean li{ position:relative; padding-left:16pt; margin-bottom:4pt; }
+ul.clean li::before{ content:""; position:absolute; left:0; top:6pt; width:6pt; height:6pt; border-radius:50%; background:var(--accent); }
+
+/* tableaux */
+table{ width:100%; border-collapse:collapse; margin:3mm 0 5mm; font-size:9.7pt; }
+th,td{ text-align:left; padding:6pt 8pt; border-bottom:1px solid var(--line); vertical-align:top; }
+thead th{ background:var(--wash); color:var(--accent-d); font-family:var(--sans); font-weight:700; font-size:8.6pt; letter-spacing:.04em; text-transform:uppercase; border-bottom:1.5px solid var(--accent); }
+tbody tr:nth-child(even){ background:#faf8f3; }
+td .who{ font-family:var(--serif); font-weight:600; font-size:10.5pt; color:var(--ink); }
+
+/* encadrés */
+.box{ background:#fff; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:8px; padding:5mm 6mm; margin:4mm 0; }
+.box.gold{ border-left-color:var(--gold); background:#fffdf3; }
+.box h4{ margin:0 0 2mm; font-size:11.5pt; }
+.callout-url{ background:var(--wash); border:1px dashed var(--accent); border-radius:8px; padding:4mm 6mm; font-family:var(--sans); }
+.callout-url .u{ font-weight:700; color:var(--accent-d); }
+
+code,.mono{ font-family:"DejaVu Sans Mono","Courier New",monospace; font-size:9pt; background:#f2efe8; padding:1pt 4pt; border-radius:3px; }
+
+/* flux statuts */
+.flow{ display:flex; gap:6mm; margin:4mm 0; }
+.flow .step{ flex:1; border:1px solid var(--line); border-radius:10px; padding:4mm; background:#fff; }
+.flow .step .n{ display:inline-grid; place-items:center; width:24pt; height:24pt; border-radius:50%; color:#fff; font-family:var(--serif); font-weight:600; font-size:11pt; margin-bottom:2mm; }
+.flow .step h4{ margin:0 0 1mm; font-size:11pt; }
+.flow .step p{ margin:0; font-size:9pt; color:var(--muted); }
+
+/* diagramme */
+.figure{ margin:4mm 0 2mm; text-align:center; }
+.figure svg{ max-width:100%; }
+.figure .cap{ font-family:var(--sans); font-size:8.5pt; color:var(--muted); margin-top:2mm; }
+
+.placeholder{ border:1.5px dashed var(--line); border-radius:10px; padding:14mm 6mm; text-align:center; color:#a7afa6; font-family:var(--sans); font-size:9.5pt; background:#fbfaf6; margin:4mm 0; }
+
+.section{ page-break-inside:auto; }
+h2.h{ page-break-after:avoid; }
+.avoid-break{ page-break-inside:avoid; }
+</style>
+</head>
+<body>
+
+<!-- ============ COUVERTURE ============ -->
+<section class="cover">
+  <span class="pill"><span class="dot">●</span>&nbsp; Projet IDA · CMS</span>
+
+  <h1>Propre&nbsp;Quartier<span class="it">le quartier reprend la parole</span></h1>
+
+  <p class="lead">Plateforme citoyenne de signalement des problèmes de propreté
+  et de voirie — conçue sous WordPress, conteneurisée avec Docker.</p>
+
+  <div class="rule"></div>
+
+  <div class="members">
+    <div class="m"><div class="role">Membre</div><div class="name">Salif Biaye</div></div>
+    <div class="m"><div class="role">Membre</div><div class="name">Abdallah Moussa Diallo</div></div>
+    <div class="m"><div class="role">Membre</div><div class="name">Abdoulaye Diaw</div></div>
+  </div>
+
+  <div class="meta">
+    <span><strong>École Supérieure Polytechnique</strong> — UCAD, Dakar</span>
+    <span>Année universitaire 2025–2026</span>
+  </div>
+</section>
+
+<!-- ============ SOMMAIRE ============ -->
+<section class="toc">
+  <h2>Sommaire</h2>
+  <ol>
+    <li><span class="t">Introduction et contexte</span></li>
+    <li><span class="t">Identification du besoin</span></li>
+    <li><span class="t">Choix du CMS : pourquoi WordPress</span></li>
+    <li><span class="t">Architecture technique</span></li>
+    <li><span class="t">Modèle de données</span></li>
+    <li><span class="t">Fonctionnalités réalisées</span></li>
+    <li><span class="t">Niveau de personnalisation</span></li>
+    <li><span class="t">Sécurité et référencement (SEO)</span></li>
+    <li><span class="t">Déploiement</span></li>
+    <li><span class="t">Répartition des tâches</span></li>
+    <li><span class="t">Difficultés rencontrées et solutions</span></li>
+    <li><span class="t">Conclusion et perspectives</span></li>
+  </ol>
+</section>
+
+<!-- ============ 1 ============ -->
+<section class="section">
+  <span class="kick">Introduction</span>
+  <h2 class="h"><span class="num">01</span>Introduction et contexte</h2>
+  <p class="lead-in">Ce rapport présente <strong>Propre Quartier</strong>, une plateforme web
+  réalisée dans le cadre du projet <strong>IDA — Introduction au Développement d'Applications</strong>.</p>
+  <p>Le cahier des charges demandait d'identifier un besoin réel au sein de notre communauté,
+  de choisir un CMS/LMS adapté, de mettre en place le site et de l'héberger sur une plateforme
+  gratuite. Plutôt qu'un simple site vitrine, nous avons choisi de construire un outil de
+  <em>civic-tech</em> utile : permettre aux habitants d'un quartier de signaler les problèmes de
+  propreté et de voirie, de les localiser sur une carte et d'en suivre la résolution.</p>
+  <p>Le projet a été développé autour du système de gestion de contenu <strong>WordPress</strong>,
+  étendu par un <strong>thème enfant</strong> et un <strong>plugin métier</strong> entièrement codés
+  par l'équipe, et conteneurisé avec <strong>Docker</strong> pour garantir une installation
+  reproductible.</p>
+</section>
+
+<!-- ============ 2 ============ -->
+<section class="section">
+  <span class="kick">Le besoin</span>
+  <h2 class="h"><span class="num">02</span>Identification du besoin</h2>
+  <p>Dans de nombreux quartiers, un dépôt d'ordures, un caniveau bouché ou un lampadaire en panne
+  peut subsister pendant des semaines, faute d'un moyen simple de le signaler et d'en garder la trace.
+  L'information se perd entre les habitants, les services techniques et les autorités locales.</p>
+  <p>Nous sommes partis d'un constat simple : <strong>rendre un problème visible, localisé et suivi,
+  c'est déjà la première étape pour le résoudre.</strong> Propre Quartier répond à ce besoin avec
+  trois promesses :</p>
+  <ul class="clean">
+    <li><strong>Signaler facilement</strong> — sans compte, en deux minutes, photo à l'appui.</li>
+    <li><strong>Localiser</strong> — chaque signalement est placé sur une carte interactive.</li>
+    <li><strong>Suivre</strong> — un cycle de statuts clair, de « Signalé » à « Résolu ».</li>
+  </ul>
+</section>
+
+<!-- ============ 3 ============ -->
+<section class="section">
+  <span class="kick">Le CMS</span>
+  <h2 class="h"><span class="num">03</span>Choix du CMS : pourquoi WordPress</h2>
+  <p>Le choix du CMS étant un critère de notation, nous l'avons argumenté. WordPress s'est imposé
+  comme le meilleur compromis pour un portail communautaire multi-rubriques.</p>
+  <table class="avoid-break">
+    <thead><tr><th>Critère</th><th>WordPress</th><th>Moodle (LMS)</th><th>Drupal</th></tr></thead>
+    <tbody>
+      <tr><td>Portail multi-rubriques</td><td>Excellent (natif)</td><td>Pensé « cours »</td><td>Bon mais complexe</td></tr>
+      <tr><td>Personnalisation</td><td>Thème + plugin sur mesure</td><td>Rigide</td><td>Puissant, courbe raide</td></tr>
+      <tr><td>Hébergement gratuit</td><td>Très facile</td><td>Lourd</td><td>Exigeant</td></tr>
+      <tr><td>Écosystème / communauté</td><td>Immense</td><td>Spécialisé</td><td>Moyen</td></tr>
+      <tr><td>Courbe d'apprentissage</td><td>Douce</td><td>Moyenne</td><td>Raide</td></tr>
+    </tbody>
+  </table>
+  <div class="box">
+    <h4>Décision</h4>
+    <p style="margin:0">Nous retenons <strong>WordPress</strong>. Moodle n'aurait été pertinent que
+    pour un besoin de <em>cours en ligne notés</em> — ce qui n'est pas notre cas. WordPress nous
+    permet à la fois un rendu soigné et un vrai travail de développement (type de contenu dédié,
+    cartographie, formulaire public), ce qui maximise le critère « niveau de personnalisation ».</p>
+  </div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section class="section">
+  <span class="kick">Architecture</span>
+  <h2 class="h"><span class="num">04</span>Architecture technique</h2>
+  <p>L'application est entièrement <strong>conteneurisée</strong>. Un fichier
+  <code>docker-compose.yml</code> orchestre quatre services, et un script d'installation
+  (<code>install.sh</code> via WP-CLI) rend le déploiement reproductible : activation du thème et du
+  plugin, création des pages, du menu, des catégories et de données de démonstration.</p>
+
+  <div class="figure avoid-break">
+  <svg viewBox="0 0 720 430" xmlns="http://www.w3.org/2000/svg" font-family="Hanken Grotesk, Arial, sans-serif">
+    <!-- navigateur -->
+    <rect x="250" y="10" width="220" height="46" rx="10" fill="#ECF3EE" stroke="#1C6B4B"/>
+    <text x="360" y="33" text-anchor="middle" font-size="13" fill="#14533A" font-weight="700">Navigateur</text>
+    <text x="360" y="48" text-anchor="middle" font-size="10" fill="#5C635D">habitant · administrateur</text>
+    <line x1="360" y1="56" x2="360" y2="84" stroke="#1C6B4B" stroke-width="2"/>
+    <polygon points="360,90 355,80 365,80" fill="#1C6B4B"/>
+
+    <!-- docker box -->
+    <rect x="30" y="92" width="660" height="250" rx="14" fill="#F4F1EA" stroke="#D8D2C6"/>
+    <text x="48" y="112" font-size="11" fill="#5C635D" font-weight="700">DOCKER COMPOSE</text>
+
+    <!-- wordpress -->
+    <rect x="60" y="128" width="270" height="92" rx="10" fill="#123A2A"/>
+    <text x="195" y="158" text-anchor="middle" font-size="14" fill="#fff" font-weight="700">WordPress</text>
+    <text x="195" y="176" text-anchor="middle" font-size="10.5" fill="#cfe3d6">Apache + PHP 8.3</text>
+    <text x="195" y="196" text-anchor="middle" font-size="10.5" fill="#EAB308" font-weight="700">Thème enfant + Plugin métier</text>
+
+    <!-- mariadb -->
+    <rect x="400" y="128" width="230" height="92" rx="10" fill="#1C6B4B"/>
+    <text x="515" y="160" text-anchor="middle" font-size="14" fill="#fff" font-weight="700">MariaDB 11</text>
+    <text x="515" y="180" text-anchor="middle" font-size="10.5" fill="#dbeede">Base de données</text>
+
+    <!-- arrows wp<->db -->
+    <line x1="330" y1="164" x2="400" y2="164" stroke="#19211D" stroke-width="2"/>
+    <polygon points="400,164 390,159 390,169" fill="#19211D"/>
+    <polygon points="330,174 340,169 340,179" fill="#19211D"/>
+    <line x1="340" y1="174" x2="400" y2="174" stroke="#19211D" stroke-width="2"/>
+    <text x="365" y="150" text-anchor="middle" font-size="9" fill="#5C635D">SQL</text>
+
+    <!-- phpmyadmin -->
+    <rect x="400" y="240" width="230" height="70" rx="10" fill="#fff" stroke="#D8D2C6"/>
+    <text x="515" y="270" text-anchor="middle" font-size="12.5" fill="#19211D" font-weight="700">phpMyAdmin</text>
+    <text x="515" y="288" text-anchor="middle" font-size="10" fill="#5C635D">administration de la base</text>
+    <line x1="515" y1="220" x2="515" y2="240" stroke="#1C6B4B" stroke-width="2"/>
+
+    <!-- wp-cli -->
+    <rect x="60" y="240" width="270" height="70" rx="10" fill="#fff" stroke="#D8D2C6"/>
+    <text x="195" y="270" text-anchor="middle" font-size="12.5" fill="#19211D" font-weight="700">WP-CLI · install.sh</text>
+    <text x="195" y="288" text-anchor="middle" font-size="10" fill="#5C635D">installation automatique</text>
+
+    <!-- services externes -->
+    <rect x="30" y="360" width="660" height="56" rx="12" fill="#fffdf3" stroke="#EAB308"/>
+    <text x="360" y="384" text-anchor="middle" font-size="11.5" fill="#7a5c00" font-weight="700">Services externes (CDN)</text>
+    <text x="360" y="402" text-anchor="middle" font-size="10" fill="#7a5c00">Carte OpenStreetMap / CARTO · Leaflet · Google Fonts</text>
+    <line x1="360" y1="342" x2="360" y2="360" stroke="#EAB308" stroke-width="2"/>
+  </svg>
+  <div class="cap">Figure 1 — Vue d'ensemble de l'architecture conteneurisée.</div>
+  </div>
+
+  <p>Le code écrit par l'équipe est <strong>versionné</strong> et monté dans le conteneur
+  (thème + plugin), tandis que le cœur de WordPress et la base vivent dans des volumes Docker.
+  Cette séparation garantit que les contributions des habitants ne sont pas perdues, même si l'on
+  change de thème.</p>
+</section>
+
+<!-- ============ 5 ============ -->
+<section class="section">
+  <span class="kick">Données</span>
+  <h2 class="h"><span class="num">05</span>Modèle de données</h2>
+  <p>L'objet central est le <strong>Signalement</strong>, implémenté comme un
+  <em>type de contenu personnalisé</em> (Custom Post Type) WordPress. La logique de données vit dans
+  le plugin <code>propre-quartier-core</code>, pas dans le thème.</p>
+  <table class="avoid-break">
+    <thead><tr><th>Élément</th><th>Type WordPress</th><th>Rôle</th></tr></thead>
+    <tbody>
+      <tr><td>Signalement</td><td>Custom Post Type</td><td>Titre + description du problème</td></tr>
+      <tr><td>Catégorie de problème</td><td>Taxonomie</td><td>Ordures, eau, éclairage, voirie, espaces verts…</td></tr>
+      <tr><td>Latitude / Longitude</td><td>Métadonnées (post meta)</td><td>Localisation sur la carte</td></tr>
+      <tr><td>Adresse</td><td>Métadonnée</td><td>Repère textuel</td></tr>
+      <tr><td>Statut</td><td>Métadonnée</td><td>Signalé · En cours · Résolu</td></tr>
+    </tbody>
+  </table>
+  <p>Toutes ces données sont stockées dans <strong>MariaDB</strong> (tables <code>wp_posts</code>,
+  <code>wp_postmeta</code>, <code>wp_terms</code>). Chaque envoi de formulaire est une insertion en
+  base ; chaque affichage de la carte est une requête de lecture.</p>
+</section>
+
+<!-- ============ 6 ============ -->
+<section class="section">
+  <span class="kick">Fonctionnalités</span>
+  <h2 class="h"><span class="num">06</span>Fonctionnalités réalisées</h2>
+  <ul class="clean">
+    <li><strong>Carte interactive</strong> (Leaflet + fond CARTO) avec marqueurs colorés selon le statut.</li>
+    <li><strong>Formulaire public de signalement</strong> : clic sur la carte pour géolocaliser, photo optionnelle, sans inscription.</li>
+    <li><strong>Modération</strong> : tout signalement est créé « en attente » et publié après vérification (anti-spam).</li>
+    <li><strong>Filtres et pagination côté serveur</strong> sur la page Signalements (par statut et par catégorie, sans JavaScript).</li>
+    <li><strong>Suivi par statuts</strong> avec code couleur, modifiable depuis l'administration.</li>
+    <li><strong>Interface responsive</strong> (ordinateur, tablette, mobile).</li>
+  </ul>
+
+  <h3>Cycle de vie d'un signalement</h3>
+  <div class="flow avoid-break">
+    <div class="step"><span class="n" style="background:#C2492C">1</span><h4>Signalé</h4><p>Le problème vient d'être publié et attend une prise en charge.</p></div>
+    <div class="step"><span class="n" style="background:#B5791C">2</span><h4>En cours</h4><p>Il est pris en compte : une intervention est en route.</p></div>
+    <div class="step"><span class="n" style="background:#2C7A4B">3</span><h4>Résolu</h4><p>C'est réglé ; le signalement reste visible comme preuve d'action.</p></div>
+  </div>
+</section>
+
+<!-- ============ 7 ============ -->
+<section class="section">
+  <span class="kick">Personnalisation</span>
+  <h2 class="h"><span class="num">07</span>Niveau de personnalisation</h2>
+  <p>Le projet ne se limite pas à de la configuration : il comporte un véritable développement.</p>
+  <h3>Plugin métier — <code>propre-quartier-core</code></h3>
+  <ul class="clean">
+    <li>Déclaration du type de contenu « Signalement » et de la taxonomie « Catégorie ».</li>
+    <li>Champs personnalisés (lat, lng, adresse, statut) exposés à l'API REST.</li>
+    <li>Traitement sécurisé du formulaire public (nonces, capacités, assainissement).</li>
+    <li>Shortcodes <code>[pq_carte]</code>, <code>[pq_formulaire]</code>, <code>[pq_signalements]</code>.</li>
+  </ul>
+  <h3>Thème enfant — identité visuelle</h3>
+  <ul class="clean">
+    <li>Direction artistique sobre : neutres chauds, accent vert pin, touches dorées.</li>
+    <li>Typographies <em>Fraunces</em> (titres) et <em>Hanken Grotesk</em> (texte).</li>
+    <li>Gabarits dédiés : accueil, page de signalement, archive, fiche détaillée, à propos.</li>
+  </ul>
+</section>
+
+<!-- ============ 8 ============ -->
+<section class="section">
+  <span class="kick">Qualité</span>
+  <h2 class="h"><span class="num">08</span>Sécurité et référencement (SEO)</h2>
+  <p><strong>Sécurité.</strong> Le formulaire public est protégé par des <em>nonces</em>, les
+  contributions passent par une modération, et toutes les entrées sont assainies et échappées.</p>
+  <p><strong>SEO.</strong> Chaque page expose une balise <em>title</em>, une méta description, des
+  balises <em>Open Graph</em> et <em>Twitter Card</em>, ainsi que des données structurées
+  <em>schema.org</em> (le site comme <code>WebSite</code>/<code>Organization</code>, chaque
+  signalement comme <code>Report</code> géolocalisé). Le plan du site XML natif de WordPress est actif.</p>
+</section>
+
+<!-- ============ 9 ============ -->
+<section class="section">
+  <span class="kick">Mise en ligne</span>
+  <h2 class="h"><span class="num">09</span>Déploiement</h2>
+  <p>Deux voies sont possibles : exécuter le <code>docker-compose</code> sur un serveur, ou héberger
+  le site sur une plateforme WordPress gratuite. Pour respecter la contrainte « host gratuit », nous
+  avons retenu la seconde, à l'aide d'une migration « tout-en-un » : un seul fichier
+  <code>.wpress</code> contenant la base, le thème, le plugin et le contenu, importé sur un
+  hébergeur gratuit (type InfinityFree).</p>
+  <div class="callout-url">
+    <strong>Site en ligne :</strong>
+    <span class="u">https://propre-quartier.freedev.app/</span>
+  </div>
+  <p style="margin-top:4mm">Étapes réalisées : export du fichier <code>.wpress</code> depuis
+  l'administration locale avec All-in-One WP Migration → création d'un compte gratuit InfinityFree →
+  création du domaine <code>propre-quartier.freedev.app</code> → installation de WordPress avec le
+  Script Installer / Softaculous → installation du plugin All-in-One WP Migration sur le site en ligne
+  → import du fichier <code>.wpress</code>, qui transfère la base, le thème, le plugin, les pages et
+  les signalements.</p>
+  <p>Après l'import, les permaliens ont été régénérés depuis <strong>Réglages → Permaliens →
+  Enregistrer</strong>. Le site public a ensuite été vérifié : page d'accueil, menu, carte et
+  signalements sont visibles en ligne.</p>
+</section>
+
+<!-- ============ 10 ============ -->
+<section class="section">
+  <span class="kick">Organisation</span>
+  <h2 class="h"><span class="num">10</span>Répartition des tâches</h2>
+  <p>Le travail a été réparti entre les trois membres du groupe selon les domaines de compétence,
+  avec une relecture croisée du code et des contenus.</p>
+  <table class="avoid-break">
+    <thead><tr><th>Membre</th><th>Rôle principal</th><th>Contributions</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="who">Salif Biaye</span></td>
+        <td>Chef de projet · Back-end &amp; DevOps</td>
+        <td>Conception générale, plugin métier (CPT, métadonnées, formulaire, modération), conteneurisation Docker, script d'installation, déploiement.</td>
+      </tr>
+      <tr>
+        <td><span class="who">Abdallah Moussa Diallo</span></td>
+        <td>Front-end &amp; Design</td>
+        <td>Thème enfant, gabarits, identité visuelle, intégration de la cartographie Leaflet, responsive, galerie d'images.</td>
+      </tr>
+      <tr>
+        <td><span class="who">Abdoulaye Diaw</span></td>
+        <td>Contenu · UX · Qualité</td>
+        <td>Pages et contenus, SEO et données structurées, filtres et pagination, tests fonctionnels, rédaction du rapport.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:9pt;color:var(--muted)">Cette répartition est indicative et peut être ajustée selon la contribution réelle de chacun.</p>
+</section>
+
+<!-- ============ 11 ============ -->
+<section class="section">
+  <span class="kick">Retours</span>
+  <h2 class="h"><span class="num">11</span>Difficultés rencontrées et solutions</h2>
+  <table class="avoid-break">
+    <thead><tr><th>Difficulté</th><th>Solution apportée</th></tr></thead>
+    <tbody>
+      <tr><td>Double en-tête avec le thème par blocs</td><td>Passage à des gabarits classiques pour un contrôle total du rendu.</td></tr>
+      <tr><td>Filtrer sans alourdir avec du JavaScript</td><td>Filtrage et pagination 100 % côté serveur via <code>pre_get_posts</code> et des paramètres d'URL.</td></tr>
+      <tr><td>Conserver l'utilisateur dans la liste après filtrage</td><td>Ancre <code>#liste</code> ajoutée aux liens de filtres et de pagination.</td></tr>
+      <tr><td>Grille terne sans photos</td><td>Illustrations vectorielles par catégorie, en repli des photos.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ 12 ============ -->
+<section class="section">
+  <span class="kick">Bilan</span>
+  <h2 class="h"><span class="num">12</span>Conclusion et perspectives</h2>
+  <p>Propre Quartier répond aux quatre exigences du cahier des charges : un besoin communautaire réel
+  et original, un CMS adapté et justifié, un site complet et personnalisé, et une mise en ligne sur un
+  hébergeur gratuit. Au-delà de la simple configuration, le projet démontre une maîtrise du CMS à
+  travers un plugin et un thème développés sur mesure.</p>
+  <p><strong>Perspectives.</strong> Le projet pourrait évoluer vers : des notifications aux services
+  concernés, un espace statistique public (nombre de problèmes résolus par zone), une application
+  mobile, ou l'ouverture des données (open data) pour les collectivités.</p>
+  <div class="box gold">
+    <h4>En une phrase</h4>
+    <p style="margin:0">Un quartier plus propre commence par un signalement — et Propre Quartier rend
+    ce geste simple, visible et suivi.</p>
+  </div>
+</section>
+
+</body>
+</html>
