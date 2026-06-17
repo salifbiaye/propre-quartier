@@ -1,0 +1,110 @@
+/* ============================================================
+   Composants Propre Quartier (carte, badges, grille, formulaire).
+   Alignes sur la direction sobre/institutionnelle du theme. Les
+   valeurs utilisent les variables du theme avec un repli, pour que
+   le plugin reste presentable meme active seul.
+   ============================================================ */
+
+:root {
+	--pq-bg:      #FAF8F3;
+	--pq-surface: #FFFFFF;
+	--pq-ink:     #19211D;
+	--pq-muted:   #6A716B;
+	--pq-line:    #E6E1D7;
+	--pq-line2:   #D8D2C6;
+	--pq-accent:  #1C6B4B;
+	--pq-accent-d:#14533A;
+	--pq-wash:    #ECF3EE;
+	--pq-radius:  14px;
+	--pq-radius-s:9px;
+	--pq-body:    "Hanken Grotesk", system-ui, sans-serif;
+	--pq-display: "Fraunces", Georgia, serif;
+	--pq-sh1: 0 1px 2px rgba(25,33,29,.06);
+	--pq-sh2: 0 4px 14px -8px rgba(25,33,29,.28);
+	--pq-sh3: 0 18px 44px -26px rgba(25,33,29,.4);
+}
+
+/* ---- Carte ---- */
+.pq-carte-wrap { margin: 1.25rem 0; }
+.pq-carte {
+	width: 100%;
+	border: 1px solid var(--line-2, var(--pq-line2));
+	border-radius: var(--radius, var(--pq-radius));
+	box-shadow: var(--sh-2, var(--pq-sh2));
+	overflow: hidden; z-index: 0;
+}
+.pq-legende { display: flex; gap: 1.4rem; flex-wrap: wrap; margin-top: 1rem; font-family: var(--font-body, var(--pq-body)); font-size: .86rem; color: var(--muted, var(--pq-muted)); }
+.pq-legende span { display: inline-flex; align-items: center; gap: .5rem; }
+.pq-legende i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; box-shadow: 0 0 0 3px rgba(0,0,0,.05); }
+
+.pq-marqueur span { display: block; width: 18px; height: 18px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35); }
+.pq-popup { max-width: 230px; font-family: var(--font-body, var(--pq-body)); }
+.pq-popup img { width: 100%; margin-bottom: .55rem; border-radius: 8px; }
+.pq-popup strong { display: block; font-family: var(--font-display, var(--pq-display)); font-weight: 500; font-size: 1.05rem; margin: .25rem 0; }
+.pq-popup em { font-style: normal; font-size: .8rem; color: var(--muted, var(--pq-muted)); }
+.pq-popup p { margin: .35rem 0; font-size: .86rem; }
+.pq-popup a { font-size: .85rem; font-weight: 600; color: var(--accent-d, var(--pq-accent-d)); }
+
+/* ---- Badges (pilules sobres) ---- */
+.pq-badge {
+	display: inline-flex; align-items: center; gap: .4rem;
+	font-family: var(--font-body, var(--pq-body));
+	font-size: .76rem; font-weight: 600; letter-spacing: .01em;
+	color: #fff; padding: .26rem .7rem; border-radius: 999px;
+}
+
+/* ---- Grille ---- */
+.pq-grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem; margin: 1.25rem 0; }
+.pq-carte-item {
+	background: var(--surface, var(--pq-surface));
+	border: 1px solid var(--line, var(--pq-line));
+	border-radius: var(--radius, var(--pq-radius));
+	overflow: hidden; display: flex; flex-direction: column;
+	box-shadow: var(--sh-1, var(--pq-sh1));
+	transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.pq-carte-item:hover { transform: translateY(-3px); box-shadow: var(--sh-3, var(--pq-sh3)); border-color: var(--line-2, var(--pq-line2)); }
+.pq-vignette { display: block; height: 172px; background-size: cover; background-position: center; }
+.pq-corps { padding: 1.25rem 1.3rem 1.4rem; display: flex; flex-direction: column; gap: .45rem; }
+.pq-cat { font-family: var(--font-body, var(--pq-body)); font-size: .76rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--muted, var(--pq-muted)); }
+.pq-corps h3 { font-family: var(--font-display, var(--pq-display)); font-weight: 500; font-size: 1.22rem; margin: .2rem 0 .15rem; line-height: 1.25; }
+.pq-corps h3 a { color: inherit; text-decoration: none; }
+.pq-corps h3 a:hover { color: var(--accent-d, var(--pq-accent-d)); }
+.pq-adresse { font-family: var(--font-body, var(--pq-body)); font-size: .85rem; color: var(--muted, var(--pq-muted)); margin: 0; }
+.pq-extrait { font-size: .94rem; color: var(--muted, var(--pq-muted)); margin: .25rem 0 0; }
+.pq-vide { padding: 3rem; text-align: center; color: var(--muted, var(--pq-muted)); border: 1px dashed var(--line-2, var(--pq-line2)); border-radius: var(--radius, var(--pq-radius)); }
+
+/* ---- Formulaire ---- */
+.pq-form { display: grid; gap: 1.25rem; max-width: 640px; margin: 1.25rem 0; }
+.pq-form label { display: grid; gap: .4rem; font-family: var(--font-body, var(--pq-body)); font-size: .9rem; font-weight: 600; color: var(--ink, var(--pq-ink)); }
+.pq-form input[type=text],
+.pq-form input[type=file],
+.pq-form select,
+.pq-form textarea {
+	font-family: var(--font-body, var(--pq-body)); font-size: 1rem; font-weight: 400;
+	padding: .72rem .85rem;
+	background: var(--surface, var(--pq-surface));
+	border: 1px solid var(--line-2, var(--pq-line2));
+	border-radius: var(--radius-s, var(--pq-radius-s));
+	color: var(--ink, var(--pq-ink));
+	transition: border-color .15s ease, box-shadow .15s ease;
+}
+.pq-form input:focus, .pq-form select:focus, .pq-form textarea:focus {
+	outline: none; border-color: var(--accent, var(--pq-accent));
+	box-shadow: 0 0 0 3px var(--accent-wash, var(--pq-wash));
+}
+.pq-aide { font-family: var(--font-body, var(--pq-body)); font-size: .85rem; color: var(--muted, var(--pq-muted)); margin: 0; }
+.pq-btn {
+	justify-self: start;
+	font-family: var(--font-body, var(--pq-body)); font-weight: 600; font-size: .95rem;
+	padding: .8rem 1.5rem;
+	background: var(--accent, var(--pq-accent)); color: #fff;
+	border: 0; border-radius: var(--radius-s, var(--pq-radius-s));
+	box-shadow: var(--sh-1, var(--pq-sh1)); cursor: pointer;
+	transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.pq-btn:hover { background: var(--accent-d, var(--pq-accent-d)); transform: translateY(-1px); box-shadow: var(--sh-2, var(--pq-sh2)); }
+
+.pq-message { font-family: var(--font-body, var(--pq-body)); font-size: .95rem; padding: .9rem 1.1rem; border-radius: var(--radius-s, var(--pq-radius-s)); border: 1px solid var(--line, var(--pq-line)); margin-bottom: 1.5rem; }
+.pq-ok { background: #E9F3EC; border-color: #CBE6D3; color: #1d5b38; }
+.pq-ko { background: #FBEDE8; border-color: #F0D2C8; color: #973019; }
