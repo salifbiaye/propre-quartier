@@ -22,7 +22,7 @@
 }
 @page:first{ margin:0; @bottom-left{content:none} @bottom-right{content:none} }
 
-*{ box-sizing:border-box; }
+*{ box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 html{ font-family:var(--sans); color:var(--ink); font-size:10.5pt; line-height:1.55; }
 body{ margin:0; }
 
@@ -110,6 +110,11 @@ code,.mono{ font-family:"DejaVu Sans Mono","Courier New",monospace; font-size:9p
 .figure svg{ max-width:100%; }
 .figure .cap{ font-family:var(--sans); font-size:8.5pt; color:var(--muted); margin-top:2mm; }
 
+/* captures d'ecran */
+.shot{ margin:4mm 0 6mm; }
+.shot img{ width:100%; border:1px solid var(--line); border-radius:8px; box-shadow:0 8px 22px -12px rgba(0,0,0,.35); }
+.shot .cap{ font-family:var(--sans); font-size:8.5pt; color:var(--muted); margin-top:2mm; text-align:center; }
+
 .placeholder{ border:1.5px dashed var(--line); border-radius:10px; padding:14mm 6mm; text-align:center; color:#a7afa6; font-family:var(--sans); font-size:9.5pt; background:#fbfaf6; margin:4mm 0; }
 
 .section{ page-break-inside:auto; }
@@ -136,8 +141,13 @@ h2.h{ page-break-after:avoid; }
     <div class="m"><div class="role">Membre</div><div class="name">Abdoulaye Diaw</div></div>
   </div>
 
+  <div style="font-family:var(--sans);font-size:9.5pt;color:rgba(255,255,255,.85);margin-bottom:14mm;display:flex;gap:12mm;flex-wrap:wrap">
+    <span><b style="color:#EAB308">En ligne</b> · propre-quartier.freedev.app</span>
+    <span><b style="color:#EAB308">Code</b> · github.com/salifbiaye/propre-quartier</span>
+  </div>
+
   <div class="meta">
-    <span><strong>École Supérieure Polytechnique</strong> — UCAD, Dakar</span>
+    <span><strong>Université Cheikh Hamidou Kane</strong> — Dakar</span>
     <span>Année universitaire 2025–2026</span>
   </div>
 </section>
@@ -176,6 +186,10 @@ h2.h{ page-break-after:avoid; }
   étendu par un <strong>thème enfant</strong> et un <strong>plugin métier</strong> entièrement codés
   par l'équipe, et conteneurisé avec <strong>Docker</strong> pour garantir une installation
   reproductible.</p>
+  <div class="shot avoid-break">
+    <img src="img/accueil.png" alt="Page d'accueil du site Propre Quartier">
+    <div class="cap">Figure 2 — Page d'accueil du site en ligne : hero, statistiques et étapes.</div>
+  </div>
 </section>
 
 <!-- ============ 2 ============ -->
@@ -321,11 +335,25 @@ h2.h{ page-break-after:avoid; }
     <li><strong>Interface responsive</strong> (ordinateur, tablette, mobile).</li>
   </ul>
 
+  <div class="shot avoid-break">
+    <img src="img/signalements.png" alt="Page Signalements : carte et filtres">
+    <div class="cap">Figure 3 — Carte interactive, filtres par statut et catégorie, liste paginée.</div>
+  </div>
+  <div class="shot avoid-break">
+    <img src="img/signaler.png" alt="Page Signaler : formulaire">
+    <div class="cap">Figure 4 — Formulaire public de signalement et colonne d'aide.</div>
+  </div>
+
   <h3>Cycle de vie d'un signalement</h3>
   <div class="flow avoid-break">
     <div class="step"><span class="n" style="background:#C2492C">1</span><h4>Signalé</h4><p>Le problème vient d'être publié et attend une prise en charge.</p></div>
     <div class="step"><span class="n" style="background:#B5791C">2</span><h4>En cours</h4><p>Il est pris en compte : une intervention est en route.</p></div>
     <div class="step"><span class="n" style="background:#2C7A4B">3</span><h4>Résolu</h4><p>C'est réglé ; le signalement reste visible comme preuve d'action.</p></div>
+  </div>
+
+  <div class="shot avoid-break">
+    <img src="img/fiche.png" alt="Fiche d'un signalement">
+    <div class="cap">Figure 5 — Fiche d'un signalement : statut, description (lettrine) et carte de localisation.</div>
   </div>
 </section>
 
@@ -347,6 +375,10 @@ h2.h{ page-break-after:avoid; }
     <li>Typographies <em>Fraunces</em> (titres) et <em>Hanken Grotesk</em> (texte).</li>
     <li>Gabarits dédiés : accueil, page de signalement, archive, fiche détaillée, à propos.</li>
   </ul>
+  <div class="shot avoid-break">
+    <img src="img/apropos.png" alt="Page À propos">
+    <div class="cap">Figure 6 — Page « À propos » : hero illustré et sections imagées.</div>
+  </div>
 </section>
 
 <!-- ============ 8 ============ -->
@@ -371,8 +403,8 @@ h2.h{ page-break-after:avoid; }
   <code>.wpress</code> contenant la base, le thème, le plugin et le contenu, importé sur un
   hébergeur gratuit (type InfinityFree).</p>
   <div class="callout-url">
-    <strong>Site en ligne :</strong>
-    <span class="u">https://propre-quartier.freedev.app/</span>
+    <strong>Site en ligne :</strong> <span class="u">https://propre-quartier.freedev.app/</span><br>
+    <strong>Code source (dépôt Git) :</strong> <span class="u">https://github.com/salifbiaye/propre-quartier</span>
   </div>
   <p style="margin-top:4mm">Étapes réalisées : export du fichier <code>.wpress</code> depuis
   l'administration locale avec All-in-One WP Migration → création d'un compte gratuit InfinityFree →
@@ -383,6 +415,18 @@ h2.h{ page-break-after:avoid; }
   <p>Après l'import, les permaliens ont été régénérés depuis <strong>Réglages → Permaliens →
   Enregistrer</strong>. Le site public a ensuite été vérifié : page d'accueil, menu, carte et
   signalements sont visibles en ligne.</p>
+
+  <div class="box gold avoid-break">
+    <h4>Accès à l'administration et publication d'un signalement</h4>
+    <p style="margin:0 0 2.5mm"><strong>Adresse :</strong> <code>https://propre-quartier.freedev.app/wp-admin</code><br>
+    <strong>Identifiant :</strong> <code>admin</code> &nbsp;·&nbsp; <strong>Mot de passe :</strong> <code>admin_pq_2025</code></p>
+    <p style="margin:0">Lorsqu'un habitant envoie le formulaire, le signalement est créé en
+    <em>« En attente »</em> et n'est <strong>pas encore visible</strong> sur le site. Pour le rendre
+    public, il faut <strong>se connecter à l'administration</strong> → menu <strong>Signalements</strong>
+    → ouvrir le signalement → cliquer sur <strong>Publier</strong>. Le statut (Signalé / En cours /
+    Résolu) se règle ensuite dans le panneau « Détails du signalement ». Ce circuit de modération
+    protège le site du spam.</p>
+  </div>
 </section>
 
 <!-- ============ 10 ============ -->

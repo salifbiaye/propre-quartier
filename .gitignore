@@ -15,7 +15,7 @@ Thumbs.db
 # Editeurs
 .vscode/
 .idea/
-
+rapport/generer_rapport_pdf.py
 # Assistants IA / notes locales
 CLAUDE.md
 claude.md
